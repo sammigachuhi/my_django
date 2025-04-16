@@ -87,3 +87,12 @@ To https://github.com/sammigachuhi/my_django.git
  * [new branch]      main -> main
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 ```
+
+So if I make any updates, below will be my procedure:
+
+`git add .`
+
+`git commit -m "commiting blah blah blah"`
+
+`git push origin main`.
+
