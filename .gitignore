@@ -1,4 +1,4 @@
 # Ignore the following files
 
 venv*
-test*
+my_tests*

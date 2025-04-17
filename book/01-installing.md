@@ -66,6 +66,16 @@ However, we ate humble pie and decided to go with `australia` instead. Not that 
 python3 manage.py startapp australia
 ```
 
+This will create several files:
+
+    __init__.py tells Python to treat the directory as a Python package.
+    admin.py contains settings for the Django admin pages.
+    apps.py contains settings for the application configuration.
+    models.py contains a series of classes that Django’s ORM converts to database tables.
+    tests.py contains test classes.
+    views.py contains functions and classes that handle what data is displayed in the HTML templates.
+
+
 ## Peek inside the project folder
 
 So this is how our directory looks like:
@@ -109,3 +119,30 @@ sanitation
         └── settings.cpython-310.pyc
 
 ```
+
+Inside our `australia` app, this is how the structure looks like:
+
+```
+├── australia
+│   ├── apps.py
+│   ├── views.py
+│   ├── migrations
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── tests.py
+│   └── models.py
+```
+
+## Test if django is working
+
+Run the following: 
+
+`django-admin version`
+
+A string of text will appear.
+
+If the following image pops up, then django is working.
+
+![](./images/django_working.PNG)
+
