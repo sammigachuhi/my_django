@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # my apps
     'australia.apps.AustraliaConfig',
+    'world.apps.WorldConfig',
     
     'django.contrib.admin',
     'django.contrib.auth',
