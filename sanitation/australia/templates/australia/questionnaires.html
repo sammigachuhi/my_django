@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block base_content %}
+
+<h1> Questionnaires </h1>
+
+<div class="row">
+    {% for question in questionnaires %}
+
+    <div class="col-md-4">
+
+        <div class="card mb-2">
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{ question.territory }}</h5>
+
+                <p class="card-text">{{ question.area }}</p>
+
+                <a href="{% url 'questionnaire_detail' question.pk %}"
+
+                   class="btn btn-primary">
+
+                    See response
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock base_content %}
+
+
+
+
+
+
+
+
+
+
+
+
