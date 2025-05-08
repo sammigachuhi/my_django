@@ -249,3 +249,97 @@ def questionnaire_detail(request, pk):
 Most of the components in this function are similar to those in the `questionnaire_index` function. However, inside the parentheses of the function name we can see a `pk` parameter. In Django, the `pk` parameter refers to, you guessed it, the primary key of every record in your database. This primary key is provided by Django automatically, in the order of 1, 2, 3 incrementally. You can access any record in your Django database by using this `pk` notation.
 
 Since the primary key (`pk`) we are using is the default provided by Django, we pass it to the `questionnaire` variable as `pk=pk` inside `Questionnaire.objects.get()`.
+
+
+## Create the templates 
+
+Now that we've created the views, it's time we create the templates that will show what is defined by the views. Inside the `templates/australia`, create two new templates, `questionnaires.html` and `questionnaire_detail.html`. 
+
+Inside the `questionnaires.html` insert the following code. 
+
+```
+{% extends "base.html" %}
+
+
+{% block base_content %}
+
+<h1> Questionnaires </h1>
+
+<div class="row">
+    {% for question in questionnaires %}
+
+    <div class="col-md-4">
+
+        <div class="card mb-2">
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{ question.territory }}</h5>
+
+                <p class="card-text">{{ question.area }}</p>
+
+                <a href="{% url 'questionnaire_detail' question.pk %}"
+
+                   class="btn btn-primary">
+
+                    See response
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock base_content %}
+
+```
+
+As mentioned in an earlier chapter, the `{% extends "base.html" %}` copies the base template we defined in the `templates` folder at project level. The `{% block base_content %} {% endblock base_content %}` simply copies the Bootstrap template in our `base.html` and whatever is encapsulated within its block inherits the bootstrap theme found in `base.html`. 
+
+However, we also introduce something else; a jinja `for` loop. The `{% for question in questionnaires %} {% endfor %}`. This is similar to a python `for` loop only that it is written in the jinja language. The `{% endfor %}` breaks out of the loop. 
+
+Inside this `for` loop we find the `{{ question.territory }}` and `{{ question.area }}` jinja tags. They stand for each value looped by the `{% for question in questionnaires %}` which references the `questionnaires` variable in `questionnaires = Questionnaire.objects.all()`. 
+
+Therefore, in essence the `for` loop will display all information filled on the `territory` and `area` field for each round of survey.
+
+Finally, we have the `<a></a>` tag containing the `"{% url 'questionnaire_detail' question.pk %}"` url reference. The `<a></a>` creates links and in this case it creates a button called `See response` that will take us to the `questionnaire_detail.html` that contains more information on the response filled in.
+
+We also have the `questionnaire_detail.html`. This template will open up when we click on the `See response` button of the `questionnaires.html`. 
+
+```
+{% extends "base.html" %}
+
+{% block base_content %}
+
+<h1> Date of the survey </h1>
+<h5> {{ questionnaire.survey_date }} </h5>
+
+<div class="row">
+    <div class="col-md-4">
+        
+        <br>
+        <h5>Time of the survey</h5>
+        <p> {{ questionnaire.survey_time }}</p>
+        <br>
+        <h5>Residence of the respondent:</h5>
+        <p>{{ questionnaire.area }}</p>
+        <br>
+        
+    </div>
+</div>
+
+
+{% endblock base_content %}
+```
+
+The template is very similar to the `questionnaires.html` webpage. In this case, however, it will reference the `questionnaire` variable which is in the `questionnaire_detail` function in our `australia/views.py`. Django will use the primary key of the item clicked inside `questionnaires.html` to display more data, in this case `survey_date` and `survey_time` inside a different webpage called `questionnaire_detail.html`. In other words, the `survey_date`, `survey_time` and redundantly `area` of the item clicked in `questionnaires.html` will show up in the `questionnaire_detail.html` webpage. This webpage will show further data using the url `http://127.0.0.1:8000/australia/questionnaires/<primary_key>/`.
+
+
+
