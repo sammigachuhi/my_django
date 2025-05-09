@@ -341,5 +341,52 @@ We also have the `questionnaire_detail.html`. This template will open up when we
 
 The template is very similar to the `questionnaires.html` webpage. In this case, however, it will reference the `questionnaire` variable which is in the `questionnaire_detail` function in our `australia/views.py`. Django will use the primary key of the item clicked inside `questionnaires.html` to display more data, in this case `survey_date` and `survey_time` inside a different webpage called `questionnaire_detail.html`. In other words, the `survey_date`, `survey_time` and redundantly `area` of the item clicked in `questionnaires.html` will show up in the `questionnaire_detail.html` webpage. This webpage will show further data using the url `http://127.0.0.1:8000/australia/questionnaires/<primary_key>/`.
 
+## Add the routes 
 
+The routes are the urls which will be used to access your webpage(s). Create a `australia/urls.py` file that will contain your urls. First of all, you will import your views.
 
+```
+from australia import views
+```
+
+Importing the views inside `australia/views.py` will enable us to get the python functions which define the content in our templates as methods. For example, below we access the `questionnaire_index` and `questionnaire_detail` functions as methods via `views.questionnaire_index` and `views.questionnaire_detail`. 
+
+```
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("sanitation", views.sanitation, name="sanitation"),
+    path("questionnaires", views.questionnaire_index, name="questionnaires"),
+    path("questionnaires/<int:pk>/", views.questionnaire_detail, name="questionnaire_detail"),
+]
+
+```
+
+The `<int:pk>` shows that the url of the `questionnaire_detail` webpage will display the contents of the response corresponding to a particular primary key. The `<int:pk>` indicates that this is an integer for the primary key in focus.
+
+Now that we have added the urls inside our `australia` app, it is time we also inform our project app, -- `sanitation` app that there is an altogether new urls file inside the `australia` app that contains the urls for our webpages. 
+
+In your `sanitation/urls.py` file add the path to your `australia/urls.py` file as shown below.
+
+```
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("sanitation", views.sanitation, name="sanitation"),
+    path("questionnaires", views.questionnaire_index, name="questionnaires"),
+    path("questionnaires/<int:pk>/", views.questionnaire_detail, name="questionnaire_detail"),
+]
+```
+
+Thereafter, run `python3 manage.py runserver`. Go to the `http://127.0.0.1:8000/questionnaires` url. Notice the last bit, `questionnaires` corresponds to the route name defined in the `path()` function inside our `australia/urls.py` file.
+
+```
+path("questionnaires", ...),
+```
+![Questionnaires webpage](images/questionnaires.PNG)
+
+Click on the *See response*, it opens a new webpage with the primary number of the response. For example `http://127.0.0.1:8000/australia/questionnaires/1/`. Again, this path corresponds to the route name we defined in the `path()` function found in `australia/urls.py` file. 
+
+```
+path("questionnaires/<int:pk>/", ...),
+```
+
+![Primary key](images/questionnaire.PNG)
