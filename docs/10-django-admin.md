@@ -90,4 +90,6 @@ If you click on one of them, you will see the responses that we put in via Djang
 
 ![Django model responses](images/django_model_responses.PNG)
 
+All in all, using the Django admin is easier than Django shell, unless you are the type who prefers writing their birthdays in cron syntax!
+
 

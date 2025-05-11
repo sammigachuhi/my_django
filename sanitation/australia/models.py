@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import date
+from django.utils import timezone
 
 # Create your models here.
 class Questionnaire(models.Model):
@@ -19,9 +21,9 @@ class Questionnaire(models.Model):
         (TA, "Tasmania")
     ]
 
-    survey_date = models.DateField(auto_now_add=True)
+    survey_date = models.DateField(default=date.today)
 
-    survey_time = models.TimeField(auto_now_add=True)
+    survey_time = models.TimeField(default=timezone.localtime)
 
     territory = models.CharField(
         choices=TERRITORY_CHOICES,
