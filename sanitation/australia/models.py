@@ -61,6 +61,9 @@ class Questionnaire(models.Model):
 
     recorder = models.ForeignKey(Researcher, on_delete=models.CASCADE,)
 
+    # images 
+    images = models.FileField(upload_to="image-%Y-%m-%d", blank=True)
+
     def __str__(self):
         return f"Date: {self.survey_date} Recorder: {self.recorder}"
 

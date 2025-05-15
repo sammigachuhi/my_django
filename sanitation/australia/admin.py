@@ -11,7 +11,7 @@ class ResearchersAdmin(admin.ModelAdmin):
 class QuestionnaireAdmin(admin.ModelAdmin):
     # pass 
     # readonly_fields = ("survey_date", "survey_time",)
-    fields = ("survey_date", "survey_time", "territory", "area", "recorder",)
+    fields = ("survey_date", "survey_time", "territory", "area", "recorder", "images",)
 
 
 admin.site.register(Researcher, ResearchersAdmin)
