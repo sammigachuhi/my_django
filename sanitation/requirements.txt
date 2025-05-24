@@ -48,7 +48,7 @@ exceptiongroup==1.2.2
 fastjsonschema==2.21.1
 filelock==3.16.1
 fsspec==2024.9.0
-GDAL==3.4.1
+# GDAL==3.4.1
 gql==3.5.0
 graphene==3.3
 graphql-core==3.2.4
