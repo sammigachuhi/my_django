@@ -37,9 +37,9 @@ dbt-semantic-interfaces==0.5.1
 deepdiff==7.0.1
 distlib==0.3.9
 Django==5.2.1
-docker==5.0.3
-docker-compose==1.29.2
-dockerpty==0.4.1
+# docker==5.0.3
+# docker-compose==1.29.2
+# dockerpty==0.4.1
 # docopt==0.6.2
 docstring_parser==0.16
 duckdb==1.1.0
