@@ -95,3 +95,39 @@ As a sanity check to see a list of the existing databases and to confirm the new
 ```
 
 You can now exist the shell session via: `\q`.
+
+
+## Installing `psycopg2`
+
+This package is used to connect Python to the Postgresql database.
+
+```
+pip install Django psycopg2
+```
+
+## Make migrations
+
+To persist our changes to the database, register our migrations and execute them via `python3 manage.py makemigrations` and `python3 manage.py migrate` respectively.
+
+## Configure settings 
+
+
+```
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'my_django',
+        'USER': 'samuel',
+        'PASSWORD': '2013',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+```
+
+
