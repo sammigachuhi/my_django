@@ -1,11 +1,6 @@
-# Chapter 16
+# Chapter 17
 
-## What is geodjango?
-
-[Geodjango](https://www.lifeingis.com/geodjango-tutorial-series/?mode=grid) is a python module for developing Geographic Information Systems (GIS) applications. A [Geographic Information System (GIS)](https://www.usgs.gov/faqs/what-a-geographic-information-system-gis) is a computer system that analyzes and displays geographically referenced information. It uses data that is attached to a unique location.
-
-Geodjango enables one create geographic web applications using Django. 
-
+## Prerequisites for geodjango
 To work with Geodjango, you will first have to install Postgresql and PostGIS.
 
 [Postgresql](https://www.enterprisedb.com/postgres-tutorials/why-django-so-impressive-developing-postgresql-and-python?lang=en) is the world's most powerful object-oriented database. The number one reason for us to use Postgresql is because Geodjango will only work with Postgresql, and not spatial lite. Other than that, Postgresql is the preferred database when working with large projects where the number of your app users is far much bigger than just a few tens. 
@@ -26,6 +21,7 @@ To work with Geodjango, you will first have to install Postgresql and PostGIS.
 * `Geocoding and Reverse Geocoding`: Functions for geocoding and reverse geocoding.
 
 * `Integration`: Access and work with PostGIS using third party tools such as QGIS, GeoServer, MapServer, ArcGIS, Tableau.
+
 
 ## Installing Postgresql 
 
@@ -57,40 +53,43 @@ sudo -u postgres psql
 
 If you run the above code, a new shell script appears: `postgres=#`...
 
-Now let's create a database and provide a name for it --`my_django`. 
+Now let's create a database and provide a name for it --`my_geodjango`. 
 
-`CREATE DATABASE my_django;`
+```
+CREATE DATABASE my_geodjango;
+```
 
 Now let's create a user for this database. 
 
 ```
-CREATE USER samuel WITH PASSWORD '2013';
+CREATE USER gachuhi WITH PASSWORD '2013';
 ```
 
 Let's do some modifications that will speed up our database operations.
 
 ```
-ALTER ROLE samuel SET client_encoding TO 'utf8';
+ALTER ROLE gachuhi SET client_encoding TO 'utf8';
 ```
 
 Let's grant all priviledges to the user `samuel`.
 
 ```
-GRANT ALL PRIVILEGES ON DATABASE my_django TO samuel;
+GRANT ALL PRIVILEGES ON DATABASE my_geodjango TO gachuhi;
 ```
 
 As a sanity check to see a list of the existing databases and to confirm the newly created is one of them you can do this via: `\list`.
 
 ```
-                              List of databases
-   Name    |  Owner   | Encoding | Collate |  Ctype  |     Access privileges     
------------+----------+----------+---------+---------+---------------------------
- my_django | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =Tc/postgres             +
-           |          |          |         |         | postgres=CTc/postgres    +
-           |          |          |         |         | samuel=CTc/postgres
- myproject | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =Tc/postgres             +
-           |          |          |         |         | postgres=CTc/postgres    +
-           |          |          |         |         | sammigachuhi=CTc/postgres
+List of databases
+     Name     |  Owner   | Encoding | Collate |  Ctype  |     Access privileges     
+--------------+----------+----------+---------+---------+---------------------------
+ my_django    | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =Tc/postgres             +
+              |          |          |         |         | postgres=CTc/postgres    +
+              |          |          |         |         | samuel=CTc/postgres
+ my_geodjango | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =Tc/postgres             +
+              |          |          |         |         | postgres=CTc/postgres    +
+              |          |          |         |         | gachuhi=CTc/postgres
+
 --snip--
 ```
 
@@ -105,12 +104,23 @@ This package is used to connect Python to the Postgresql database.
 pip install Django psycopg2
 ```
 
-## Make migrations
 
-To persist our changes to the database, register our migrations and execute them via `python3 manage.py makemigrations` and `python3 manage.py migrate` respectively.
+# Configuring our database 
 
-## Configure settings 
+As mentioned earlier, Geodjango will only work with the Postgresql database. And by the way, it is preferable to work with Postgresql for larger projects. 
 
+The default database for any Django project is the sqlite database as shown below.
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+```
+
+However, we shall comment out the entire `'default'` dictionary and replace it with the details of our Postgresql database. 
 
 ```
 DATABASES = {
@@ -130,4 +140,82 @@ DATABASES = {
 }
 ```
 
+Replace the entire `DATABASE` variable with the new defaults. You can choose to comment out or completely erase the former `'defaults'` values. I prefer to comment out so that I can easily revert to the originals in case things get tricky!
 
+```
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'my_geodjango',
+        'USER': 'gachuhi',
+        'PASSWORD': '2013',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+```
+
+## Installing PostGIS
+
+To install Postgis, simpy run:
+
+```
+sudo apt install postgis
+```
+
+You will be prompted for a password.
+
+Let's go back to the Postresql shell again. We want to enable the PostGIS extension for our Django project.
+
+```
+sudo -u postgres psql
+```
+
+Once the Postgresql shell opens, insert the following:
+
+```
+CREATE EXTENSION IF NOT EXISTS postgis;
+```
+
+We shall make the user we created, `gachuhi` in this case, as the superuser. Insert the following in the Postgresql shell
+
+```
+ALTER ROLE gachuhi SUPERUSER;
+```
+
+## Make migrations
+
+To persist our changes to the database, register our migrations and execute them via `python3 manage.py makemigrations` and `python3 manage.py migrate` respectively.
+
+## Creating a superuser
+
+We will create a superuser who will be the admin of our Django-admin platform.
+
+To keep matters simple, we shall use the same credentials as those in our `sanitation/` project.
+
+```
+python manage.py createsuperuser
+```
+
+You will be prompted for a username, email and password.
+
+```
+Username (leave blank to use 'sammigachuhi'): <your-username>
+Email address: <your-email>
+Password: 
+Password (again): 
+
+```
+
+If the response you get after inserting your credentials is `Superuser created successfully.`, then you're good to go.
+
+Run our Geodjango server via `python3 manage.py runserver` and head to `http://127.0.0.1:8000/admin/`. Check if you can sign in using the username and password your provided above. 
+
+If all is well, it should take you to the Django-admin page below.
+
+![Admin page of our Geodjango project](images/geodjango-admin.PNG)
