@@ -219,3 +219,14 @@ Run our Geodjango server via `python3 manage.py runserver` and head to `http://1
 If all is well, it should take you to the Django-admin page below.
 
 ![Admin page of our Geodjango project](images/geodjango-admin.PNG)
+
+
+
+
+
+
+
+
+
+
+
