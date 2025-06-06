@@ -78,9 +78,11 @@ class Question(models.Model):
     comments = models.TextField()
 
     def __str__(self):
-        return self.recorder, self.names, self.location, self.age, self.crops
+        return f"{self.recorder} {self.names} {self.location} {self.age} {self.crops}"
 
 ```
+
+## Image configurations in the `settings.py` file 
 
 Since we also want to capture images, we shall add two new variable in the `settings.py` file.
 
@@ -89,6 +91,8 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 ```
+
+## Urls and views 
 
 Also, we shall add a new addition to the `agriculture/urls.py` file. At the very top, import the `include`, `settings`, and `static` packages.
 
@@ -104,10 +108,38 @@ Then add the static images to the `urlpatterns` variable.
 ```
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("", include("geolocations.urls")),
+    path("", include("geolocations.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 ```
+
+Let's go to the `geolocations/views.py` file. 
+
+Let's create a simple home page.
+
+```
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def home(request):
+    return HttpResponse("Welcome to the Geolocation App!")
+
+```
+
+
+Create a `geolocations/urls.py` file and create the `urlpatterns` for the homepage view of our `geolocations` app.
+
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.home, name="home"), 
+]
+
+```
+
+## Configurations in the `admin.py` file 
 
 In the `geolocations/admin.py` file, we shall import some new tools.
 
@@ -125,7 +157,7 @@ Let's also register our models.
 
 ```
 @admin.register(Researcher)
-class ResearcherAdmin(GISModelAdmin):
+class ResearcherAdmin(admin.ModelAdmin):
     list_display = ('full_name',)
 
 @admin.register(Question)
@@ -133,5 +165,27 @@ class QuestionAdmin(GISModelAdmin):
     list_display = ('recorder', 'names', 'location', 'age', 'crops',)
 
 ```
+
+## Running the server 
+
+Now let's fire up our server.
+
+```
+python3 manage.py runserver
+```
+
+When you check your local host `http://127.0.0.1:8000/`, you will see a very simple unappealing welcome message.
+
+![Geolocation home page](images/geolocation_home_page.PNG)
+
+If you proceed to the *admin* webpage (http://127.0.0.1:8000/admin/) you will see the two models of *Researcher* and *Question* we created.
+
+![Geolocation models](images/geolocation_models.PNG)
+
+You can add some names of your researchers, and also respond to questions. You will notice that the dropdown in the **Recorder** field is dependent on the names you inserted in the **Researcher** class.
+
+Once you save your responses the fields we defined to be shown in the `list_display` of the `QuestionAdmin` class are what will show up on the **Questions** interface of our admin page.
+
+![Responses to our geolocation questions](images/geolocation_responses.PNG)
 
 
