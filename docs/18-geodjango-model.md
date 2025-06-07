@@ -82,6 +82,17 @@ class Question(models.Model):
 
 ```
 
+## Create a media folder
+
+Because we will be uploading images, we have to create a `media/` folder which shall store the images we shall be uploading locally. 
+
+Within your `my_geodjango` directory, create a `media/` folder and within it create an `images` folder.
+
+```
+media
+└── images
+```
+
 ## Image configurations in the `settings.py` file 
 
 Since we also want to capture images, we shall add two new variable in the `settings.py` file.
