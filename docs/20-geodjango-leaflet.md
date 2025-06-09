@@ -265,7 +265,7 @@ We shall add the routing to our `locations.html` template but we shall add a val
 urlpatterns = [
     path("", views.home, name="home"), 
     path("responses/", views.responses, name="responses"),
-    path("<int:pk>/", views.locations, name="locations"),
+    path("locations/<int:pk>/", views.locations, name="locations"),
 ]
 
 ```
