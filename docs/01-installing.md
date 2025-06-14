@@ -1,4 +1,4 @@
-# Chapter 01
+# Chapter 01: Installing Django
 
 ## Creating virtual environment
 

@@ -1,8 +1,8 @@
-# Chapter 2
+# Chapter 2: A basic overview of Github
 
 ## What is Github?
 
-Where you store code. But more than just that.
+[GitHub](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://github.com/&ved=2ahUKEwj57ufuuvCNAxUIT6QEHS8hK8UQFnoECAkQAQ&usg=AOvVaw38IHvcyBra8HGhmSxvlCGw) is a proprietary developer platform that allows developers to create, store, manage, and share their code
 
 
 ## Saving to Github
@@ -12,7 +12,7 @@ Add the following into the `.gitignore` file.
 
 ```
 venv*
-test*
+
 ```
 
 We add an asterisk (*) to specify any file that begins with those letters shouldn't be pushed to Github.
@@ -67,9 +67,9 @@ It will print out this:
  create mode 100644 sanitation/sanitation/wsgi.py
  ```
 
- 4. `git branch -M main` - set the branch to use. We specify `main` branch. We don't want the default of `master` as it may bring bad connotations to some.
+ 4. `git branch -M main` - set the branch to use. We specify `main` branch.
 
- 5. `git remote add origin https://github.com/sammigachuhi/my_django.git` - specify the specific online repository we will push to. Remember the repository we created on Github? It's https will be specified here.
+ 5. `git remote add origin https://github.com/sammigachuhi/my_django.git` - specify the specific online repository we will push to. Remember the repository we created on Github? It's https link should be added after the word `origin`.
 
  6. `git push -u origin main` - push our local repository to the remote (online) repository.
 

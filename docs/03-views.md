@@ -1,8 +1,8 @@
-# Chapter 3
+# Chapter 3: A Django view
 
 ## Add the app 
 
-We add apps inside the `settings.py` file under your project folder, in this case `sanitation`.
+We add apps inside the `settings.py` file under the project folder, and in this case `sanitation` since its the name of our project. Go back to [Chapter 1](01-installing.md#chapter-01-installing-django) to refresh your memory on how we created a project and an app directory.
 
 To include an app in your project, you need to reference to its configuration class at the beginning of the `INSTALLED_APPS` list in `settings` file.
 
@@ -30,11 +30,11 @@ In this piece of code, you define a **view function** named `home()`. When you c
 
 **NB**: A view function takes at least one argument, request. The request object is created whenever a page loads, and it contains metadata about the page request.
 
-Now that you’ve created the view function, you need to create the HTML template to display to the user. The render() function looks for HTML templates inside a directory called templates/ in your app directory. Since templates of different apps can have the same names, it’s also best practice to add a subdirectory with the app’s name inside the templates/ directory.
+Now that you’ve created the view function, you need to create the HTML template to display to the user. The `render()` function looks for HTML templates inside a directory called `templates/` in your app directory. Since templates of different apps can have the same names, it’s also best practice to add a subdirectory with the app’s name inside the `templates/` directory.
 
-Create the templates/ directory, a subdirectory named pages/, and subsequently a file named `home.html` inside it.
+Create the `templates/` directory, a subdirectory named `pages/`, and subsequently a file named `home.html` inside it.
 
-Once you’ve created the template folders and home.html, open the HTML file in your editor and add the following lines of code:
+Once you’ve created the template folders and `home.html`, open the HTML file in your editor and add the following lines of code:
 
 `<h1>Australia, welcome</h1>`
 
@@ -51,4 +51,4 @@ australia
 --snip--
 ```
 
-Now that you’ve created the template that your home() view function expects, you need to tell Django when to serve the view. For this, you need to create a new route to the project.
+Now that you’ve created the template that your `home()` view function expects, you need to tell Django when to serve the view. For this, you need to create a new route to the project.
