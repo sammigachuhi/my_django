@@ -1,4 +1,4 @@
-# Chapter 4
+# Chapter 4: Routes
 
 ## What is a route in a django project?
 
@@ -8,7 +8,7 @@ Think of routes as signposts that guide a user to the right location. A [route](
 
 ## Adding a route
 
-Next, you need to hook up an URL so that you can visit the `australia` that you’ve just created. Your `sanitation` folder contains a file named `urls.py`. In this file, you’ll include a URL configuration for the `australia` app:
+To create a route, you need to hook up a URL so that you can visit the `australia` that you’ve just created. Your `sanitation` folder contains a file named `urls.py`. In this file, you’ll include a URL configuration for the `australia` app:
 
 ```
 from django.contrib import admin
@@ -21,9 +21,9 @@ urlpatterns = [
 
 ```
 
-By adding another path() to urlpatterns, you create a new route for your Django example project. Whenever you visit the root path of your project, the routes of the `australia` application will load. The `australia.urls` module doesn’t exist yet, so you’ll need to create it:
+By adding another `path()` to urlpatterns, you create a new route for your Django example project. Whenever you visit the root path of your project, the routes of the `australia` application will load. The `australia.urls` module doesn’t exist yet, so you’ll need to create it:
 
-Inside urls.py, you need to import the path object as well as the app’s views module. Then you define a list of URL patterns that correspond to the various view functions. At the moment, you’ve only created one view function, so you only need to include one route:
+Inside `urls.py`, you need to import the path object as well as the app’s views module. Then you define a list of URL patterns that correspond to the various view functions. At the moment, you’ve only created one view function, so you only need to include one route:
 
 
 ```
@@ -63,7 +63,7 @@ You have 18 unapplied migration(s). Your project may not work properly until you
 Run 'python manage.py migrate' to apply them.
 ```
 
-What on earth are migrations?
+What on earth are *migrations*?
 
 Migrations are like what commits are to Github. Let me make it more simple in case you haven't worked with Github before. Migrations are what tell Django to notice the new changes you have made to your Django models.
 
@@ -85,7 +85,7 @@ Now to update the database based on the models we created, you run:
 python3 manage.py migrate
 ```
 
-This will create the database that matches to the model you defined. 
+This will create the database that matches the model you defined. 
 
 Below is our output.
 

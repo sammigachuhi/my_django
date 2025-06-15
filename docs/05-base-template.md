@@ -1,4 +1,4 @@
-# Chapter 5
+# Chapter 5: Base template
 
 ## Beautifying our app
 
@@ -12,11 +12,11 @@ Create a directory named `templates/` in the `sanitation/` folder. Inside this n
 
 As you saw previously, each Django project can consist of multiple apps that handle separate logic, and each app contains its own `templates/` directory to store HTML templates related to the application. For templates that the whole project shares, it’s a good idea to create a `templates/` directory in the root directory. That's why we are creating the `templates/` directory inside our `sanitation` project directory.
 
-Instead of having to import Bootstrap styles into every app, you can create a template or set of templates that all the apps share. As long as Django knows to look for templates in this new shared directory, it can save a lot of repeated styles.
+Instead of having to import Bootstrap styles into every app, you can create a template or set of templates that all the apps share. As long as Django knows it should look for templates in this new shared directory, it can save a lot of repeated styles.
 
 ## Adding bootstrap
 
-Inside base.html, add the following lines of code:
+Inside `base.html`, add the following lines of code:
 
 ```
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ Inside base.html, add the following lines of code:
 
 ```
 
-With the code above, you create the skeleton of a valid HTML document.
+With the above code, you create the skeleton of a valid HTML document.
 
 We add the bootstrap link to the `link` and `script` tags. The bootstrap link within the `link` tag of our html `<head>` is responsible for creating the bootstrap CSS while the `script` tag in the `body` section enables the JavaScript bundle for positioning dropdowns, popovers and tooltips.
 
@@ -46,7 +46,7 @@ We add the bootstrap link to the `link` and `script` tags. The bootstrap link wi
 
 Another interesting bit in the `base.html` parent template is the use of `{% block %}` template tags in the `title` tag and `body` section. With this template tag, you can define content blocks that you can use or override in child templates that extend the parent template. That is, these template tags will enable you to replicate the styling in the base template to other apps.
 
-To see this inheritance in action, you need to adjust the home.html template:
+To see this inheritance in action, you need to adjust the `home.html` template:
 
 ```
 {% extends "base.html" %}
@@ -87,7 +87,7 @@ TEMPLATES = [
 
 ## The bootstrapped page
 
-You’ve already defined the constant `BASE_DIR` in `settings.py`, and it points to your project’s root directory. Next, you join the path with the forward slash operator (/) from pathlib to point to the templates/ directory and add it to the "DIRS" list.
+You’ve already defined the constant `BASE_DIR` in `settings.py`, and it points to your project’s root directory. Next, you join the path with the forward slash operator `(/)` from pathlib to point to the `templates/` directory and add it to the "DIRS" list.
 
 When you rerun `python3 manage.py runserver` you can see that the home page has a slightly different styling.
 
