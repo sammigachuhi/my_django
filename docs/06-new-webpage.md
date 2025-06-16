@@ -2,9 +2,7 @@
 
 ## Adding a new webpage
 
-Suppose we want to add a new webpage, precisely because we are inspired to do more.
-
-The first thing would be to add a new html file within your `templates/australia` directory.
+Suppose we want to add a new webpage, the first thing to do would be to add a new html file within our `templates/australia` directory.
 
 Name the new html file as `sanitation.html` and insert the following as a starter.
 
@@ -35,7 +33,7 @@ def sanitation(request):
 
 ## Adding new route
 
-The `urls.py` file is responsible for connecting (mapping) the address of a page to its appropriate view. For example, you don't want your shopping url to open to the home page, and vice versa. When a user requests a URL, Django goes through the list of URL patterns defined in the urls.py file and finds the first pattern that matches the URL. If no pattern matches, Django returns a 404 error.
+The `urls.py` file is responsible for connecting (mapping) the address of a page to its appropriate view. For example, you don't want your shopping url to open to the home page, and vice versa. When a user requests a URL, Django goes through the list of URL patterns defined in the `urls.py` file and finds the first pattern that matches the URL. If no pattern matches, Django returns a 404 error.
 
 Let's add the url for sanitation in our `australia/urls.py` file.
 

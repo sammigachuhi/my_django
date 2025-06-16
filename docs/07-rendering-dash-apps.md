@@ -7,15 +7,15 @@ Dash is a low-code framework for building data visualization apps using Python. 
 
 ## Rendering dash app in our django app
 
-Truth be told, we tried all we could to render a Dash app inside our Django `sanitation` app using the steps outlined in this [document](https://www.etemkeskin.com/index.php/2020/11/08/how-is-dash-plotly-data-visualization-framework-used-in-django/?utm_source=pocket_shared) and [here](https://www.etemkeskin.com/index.php/2020/11/08/how-is-dash-plotly-data-visualization-framework-used-in-django/?utm_source=pocket_shared). However, we kept running into several errors until we threw in the towel and well, resorted to easier means. 
+Truth be told, we tried all we could to render a Dash app inside our Django `sanitation` app using the steps outlined in this [document](https://www.etemkeskin.com/index.php/2020/11/08/how-is-dash-plotly-data-visualization-framework-used-in-django/?utm_source=pocket_shared) and [here](https://www.etemkeskin.com/index.php/2020/11/08/how-is-dash-plotly-data-visualization-framework-used-in-django/?utm_source=pocket_shared). However, we kept running into several errors until we threw in the towel and well, ultimately, we resorted to easier means. 
 
-The below may sound a low-class method but somehow enabled us to achieve the same end with extra space for more creativity if we so wished. HTML provides an `iframe` tag that enables one host a mini-webpage with the same webpage. The syntax is:
+The below may sound like an amateurish method (and probably is) but it nevertheless enabled us to achieve the same end goal. HTML provides an `iframe` tag that enables one host a mini-webpage with the same webpage. The syntax is:
 
 ```
 <iframe src="URL"></iframe>
 ```
 
-Therefore, going back to the `sanitation.html` file within our `australia` folder, like so, we shall add a `div` tag and some text to give some context to our dashboard.
+Therefore, going back to the `sanitation.html` file within our `australia` folder, we shall add a `div` tag and some text to give some context to our dashboard.
 
 ```
 templates
@@ -40,8 +40,6 @@ Previously, you `sanitation.html` template was as follows:
 
 ```
 
-
-
 Add the following `div` element inside your `sanitation.html` template. 
 
 ```
@@ -54,9 +52,9 @@ Add the following `div` element inside your `sanitation.html` template.
 </div>
 ```
 
-As you can see apart from inserting the url to our Dash app, we also specify the height and width of our webpage. 
+As you can see, apart from inserting the url to our Dash app, we also specify the height and width of our webpage. 
 
-For more context, we changed the `<h1>` tag and added a very short paragraph to provide more contextual basis. Showing more on HTML is beyond the scope of this tutorial. Here is the `sanitation.html` template at length.
+For more context, we changed the `<h1>` tag and added a very short paragraph to provide more contextual basis. Here is the `sanitation.html` template at length.
 
 ```
 {% extends "base.html" %}
