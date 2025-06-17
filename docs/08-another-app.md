@@ -4,7 +4,7 @@
 
 Now that we had practice with creating our `australia` app that shows the public sanitation facilities in Australia, and even rendered a mini-webpage of our Dash app in it, let's create a second app to concretize our Django skills.
 
-The app we shall create shall render another Dash app of our children diarrhoea related cases. Don't worry about the fanaticism with sanitation issues, it's just that the topic is close to our heart. 
+The app we shall create shall render another Dash app of our [Diarrhoea related deaths among children under 5 years](https://data-visualization-for-diarrhoea-deaths.onrender.com/) dash app. Don't worry about the fanaticism with sanitation issues, it's just that the topic is close to our heart. 
 
 ## Create the app in Django 
 
@@ -123,7 +123,7 @@ Now that you’ve created the template that your `dysentry` view function expect
 
 ## Add a route 
 
-Next, you need to hook up an URL so that you can visit the page that you’ve just created. Your `sanitation/` folder contains a file named `urls.py`. In this file, you’ll include a URL configuration for the `world` app:
+First, you need to hook up an URL so that you can visit the page that you’ve just created. Your `sanitation/` folder contains a file named `urls.py`. In this file, you’ll include a URL configuration for the `world` app:
 
 By adding another `path()` to `urlpatterns`, you create a new route for your Django `sanitation` project. Whenever you visit the root path of your project, the routes of the pages application will load. The `world.urls` module doesn’t exist yet, so you’ll need to create it by adding a `urls.py` file under the `world` directory.
 
@@ -155,7 +155,7 @@ urlpatterns = [
 
 ```
 
-We define a list of URL patterns that correspond to the various view function, in our case, the `dysentry` view function. That's what we include here.
+We define a list of URL patterns that correspond to the various view functions, which in our case is the `dysentry` view function. 
 
 ## View the app
 

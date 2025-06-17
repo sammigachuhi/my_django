@@ -2,11 +2,11 @@
 
 ## What is a model in Django?
 
-A [Django model](https://www.geeksforgeeks.org/django-models/) is the built-in feature that Django uses to create tables, their fields and various constraints. In short, a Django model is the SQL Database one uses with Django. 
+A [Django model](https://www.geeksforgeeks.org/django-models/) is a built-in feature that Django uses to create tables, their fields and various constraints. In short, a Django model is the SQL Database one uses with Django. 
 
 The basics of a model include: 
 
-* Each model is a Python class that subclasses django.db.models.Model 
+* Each model is a Python class that subclasses `django.db.models.Model` 
 
 * Each attribute of the model represents a database field. 
 
@@ -17,13 +17,13 @@ In Django, models are defined inside a `models.py` script.
 
 We want to start simple. We want to assume that we want to create a database that for starters, captures the following information:
 
-* survey_date - the date at which the survey was undertaken 
+* `survey_date` - the date at which the survey was undertaken 
 
-* survey_time - the time at which the survey was undertaken 
+* `survey_time` - the time at which the survey was undertaken 
 
-* territory - the administrative region at which the survey was undertaken 
+* `territory` - the administrative region at which the survey was undertaken 
 
-* area - the state, town or neighbourhood the survey was carried out. Let's keep it very simple 
+* `area` - the state, town or neighbourhood the survey was carried out. Let's keep it very simple 
 
 
 ## Creating the class 
@@ -72,7 +72,7 @@ class Questionnaire(models.Model):
 
 ```
 
-Why did we start with the list of constants. This is because we want the choices to be those that can be referenced in case we import the model inside another class. For example, `Questionnaire.WA` will work anywhere that the `Questionnaire` class has been imported. 
+Why did we start with the list of constants? This is because we want the choices to be those that can be referenced in case we import the model inside another class.  
 
 Now let's create the `territory` field which will contain our territory choices. 
 
@@ -82,7 +82,6 @@ Now let's create the `territory` field which will contain our territory choices.
         default=WA
     )
 ```
-
 
 Note that the `choices` parameter references the lists referenced by `TERRITORY_CHOICES`. 
 
@@ -131,14 +130,14 @@ class Questionnaire(models.Model):
 
 ## Migrate the model 
 
-Now that you have created your model and update it, it is now time to migrate the model in Django. Why are we doing this? Initially, our `australia/models.py` file was empty apart from the first line of `from django.db import models` which imports the `models` package. Since we have created and update a new model, we have to generate migration files that capture the changes in a human-readable format. Furthermore, we will specify in which app to generate the migration files for; the `australia` app.
+Now that you have created your model and updated it, it is time to migrate the model in Django. Why are we doing this? Initially, our `australia/models.py` file was empty apart from the first line of `from django.db import models` which imports the `models` package. Since we have created and updated a new model, we have to generate migration files that capture the changes in a human-readable format. Furthermore, we will specify in which app to generate the migration files for, that is the `australia` app.
 
 ```
 python3 manage.py makemigrations australia
 
 ```
 
-If you run the `makemigrations` command without the `australia` flag, it will run migrations for the entire project, which is *not* what we want. 
+If you run the `makemigrations` command without the `australia` flag, it will run migrations for the entire project, which is *ideally* not what we want. 
 
 Running this command creates a database called `db.sqlite3` within our project folder. 
 
@@ -158,7 +157,7 @@ python3 manage.py migrate australia
 
 ## Django shell 
 
-To create instances of our `Questionnaire` class, we will use Django shell. This is a scripting language much like Python shell which enables us access the database. To start using the Django shell interface, type:
+To create instances of our `Questionnaire` class, we will use Django shell. This is a scripting language much like Python shell which enables us to access the sqlite database. To start using the Django shell interface, type:
 
 ```
 python manage.py shell
@@ -172,7 +171,7 @@ First import the `Questionnaire` model.
 from australia.models import Questionnaire
 ```
 
-Let's create an instance of our first questionnaire. 
+Let's create an instance of our first questionnaire and fill some values. 
 
 ```
 first_questionnaire = Questionnaire(
@@ -203,9 +202,9 @@ To exit the Django shell, type `exit()`.
 
 ## Create the views 
 
-We want to create the views that will be used in designing our multiple page app. We want our `australia` app to have two web pages. One is for showing the total questionnaires that have been filled while the second will go into detail at what has been filled in each questionnaire. 
+We want to create the views that will be used in designing our multiple page app. We want our `australia` app to have two web pages. One is for showing the total questionnaires that have been filled while the second will go into detail at what has been filled into each questionnaire. 
 
-Let's start with the first web page that provides a general overview of the responses. We shall name this webpage `questonnaires`. 
+Let's start with the first web page that provides a general overview of the responses. We shall name this webpage `questionnaires`. 
 
 You will first import the `Questionnaire` model at the top of your `australia/views.py`
 
@@ -232,10 +231,9 @@ Let's go over the above code block.
 
 `context = {...}` - this is a dictionary that stores all values retrieved by the `questionnaires` variable. When `context` is passed into the `render()` function, it provides all the retrieved values to the template. 
 
+We also want to have a webpage which will provide further details when a template is clicked. For example, say I click the template for the first questionnaire. This will open another webpage that shows additional contents of the responses collected by the first questionnaire. 
 
-We also want to have a webpage which will provide further details when a template is clicked. For example, say I click the template for the first questionnaire. This will open another webpage that shows more contents of the responses collected by the first questionnaire. 
-
-Let's create the function which we shall call `questionnaire_details`. 
+Let's create the function called `questionnaire_details` for showing additional details of the responses. 
 
 ```
 def questionnaire_detail(request, pk):
@@ -246,7 +244,7 @@ def questionnaire_detail(request, pk):
     return render(request, "australia/questionnaire_detail.html", context)
 ```
 
-Most of the components in this function are similar to those in the `questionnaire_index` function. However, inside the parentheses of the function name we can see a `pk` parameter. In Django, the `pk` parameter refers to, you guessed it, the primary key of every record in your database. This primary key is provided by Django automatically, in the order of 1, 2, 3 incrementally. You can access any record in your Django database by using this `pk` notation.
+Most of the components in this function are similar to those in the `questionnaire_index` function. However, inside the parentheses of the function name we can see a `pk` parameter. In Django, the `pk` parameter refers to the primary key of every record in your database. This primary key is provided by Django automatically, and is an auto-incrementing integer that progressively increases in the order of 1, 2, 3 and so on. You can access any record in your Django database by using this `pk` notation.
 
 Since the primary key (`pk`) we are using is the default provided by Django, we pass it to the `questionnaire` variable as `pk=pk` inside `Questionnaire.objects.get()`.
 
@@ -301,17 +299,17 @@ Inside the `questionnaires.html` insert the following code.
 
 ```
 
-As mentioned in an earlier chapter, the `{% extends "base.html" %}` copies the base template we defined in the `templates` folder at project level. The `{% block base_content %} {% endblock base_content %}` simply copies the Bootstrap template in our `base.html` and whatever is encapsulated within its block inherits the bootstrap theme found in `base.html`. 
+As mentioned in [Chapter 5](05-base-template.md#creating-a-basehtml-file), the `{% extends "base.html" %}` copies the base template we defined in the `templates` folder at project level. The `{% block base_content %} {% endblock base_content %}` simply copies the Bootstrap template in our `base.html` and whatever is encapsulated within its block inherits the bootstrap theme found in `base.html`. 
 
-However, we also introduce something else; a jinja `for` loop. The `{% for question in questionnaires %} {% endfor %}`. This is similar to a python `for` loop only that it is written in the jinja language. The `{% endfor %}` breaks out of the loop. 
+However, we also introduce something else; a jinja `for` loop. The `{% for question in questionnaires %} {% endfor %}`. This is similar to a python `for` loop only that it is written in jinja syntax. The `{% endfor %}` breaks out of the loop. 
 
-Inside this `for` loop we find the `{{ question.territory }}` and `{{ question.area }}` jinja tags. They stand for each value looped by the `{% for question in questionnaires %}` which references the `questionnaires` variable in `questionnaires = Questionnaire.objects.all()`. 
+Inside this `for` loop we find the `{{ question.territory }}` and `{{ question.area }}` jinja tags. They stand for each value looped by the `{% for question in questionnaires %}` which references the `questionnaires` variable in `questionnaires = Questionnaire.objects.all()` of the `Questionnaire` class. 
 
 Therefore, in essence the `for` loop will display all information filled on the `territory` and `area` field for each round of survey.
 
-Finally, we have the `<a></a>` tag containing the `"{% url 'questionnaire_detail' question.pk %}"` url reference. The `<a></a>` creates links and in this case it creates a button called `See response` that will take us to the `questionnaire_detail.html` that contains more information on the response filled in.
+Finally, we have the `<a></a>` tag containing the `"{% url 'questionnaire_detail' question.pk %}"` url reference. The `<a></a>` creates links and in this case it creates a button called `See response`. Clicking on this button will take us to the `questionnaire_detail.html` that contains more information on the response that was filled in.
 
-We also have the `questionnaire_detail.html`. This template will open up when we click on the `See response` button of the `questionnaires.html`. 
+The template of `questionnaire_detail.html` looks below.
 
 ```
 {% extends "base.html" %}
@@ -339,7 +337,7 @@ We also have the `questionnaire_detail.html`. This template will open up when we
 {% endblock base_content %}
 ```
 
-The template is very similar to the `questionnaires.html` webpage. In this case, however, it will reference the `questionnaire` variable which is in the `questionnaire_detail` function in our `australia/views.py`. Django will use the primary key of the item clicked inside `questionnaires.html` to display more data, in this case `survey_date` and `survey_time` inside a different webpage called `questionnaire_detail.html`. In other words, the `survey_date`, `survey_time` and redundantly `area` of the item clicked in `questionnaires.html` will show up in the `questionnaire_detail.html` webpage. This webpage will show further data using the url `http://127.0.0.1:8000/australia/questionnaires/<primary_key>/`.
+The template is very similar to the `questionnaires.html` webpage. In this case, however, it will reference the `questionnaire` variable which is in the `questionnaire_detail` function of our `australia/views.py`. Django will use the primary key of the item clicked inside `questionnaires.html` to display more data, in this case `survey_date` and `survey_time` inside a different webpage called `questionnaire_detail.html`. In other words, the `survey_date`, `survey_time` and `area` of the item clicked in `questionnaires.html` will show up in the `questionnaire_detail.html` webpage. This url of this additional data will be `http://127.0.0.1:8000/australia/questionnaires/<primary_key>/`.
 
 ## Add the routes 
 
@@ -349,7 +347,7 @@ The routes are the urls which will be used to access your webpage(s). Create a `
 from australia import views
 ```
 
-Importing the views inside `australia/views.py` will enable us to get the python functions which define the content in our templates as methods. For example, below we access the `questionnaire_index` and `questionnaire_detail` functions as methods via `views.questionnaire_index` and `views.questionnaire_detail`. 
+Importing the views inside `australia/views.py` will enable us to get the python functions which define the content that gets shown in our templates as methods. For example, below we access the `questionnaire_index` and `questionnaire_detail` functions as methods via `views.questionnaire_index` and `views.questionnaire_detail`. 
 
 ```
 urlpatterns = [
@@ -361,9 +359,9 @@ urlpatterns = [
 
 ```
 
-The `<int:pk>` shows that the url of the `questionnaire_detail` webpage will display the contents of the response corresponding to a particular primary key. The `<int:pk>` indicates that this is an integer for the primary key in focus.
+The `<int:pk>` stands for the integer for the primary key in focus, which is ultimately a particular response.
 
-Now that we have added the urls inside our `australia` app, it is time we also inform our project app, -- `sanitation` app that there is an altogether new urls file inside the `australia` app that contains the urls for our webpages. 
+Now that we have added the urls inside our `australia` app, it is time we also inform our project app, -- `sanitation` app that there is a new urls file inside the `australia` app.
 
 In your `sanitation/urls.py` file add the path to your `australia/urls.py` file as shown below.
 
