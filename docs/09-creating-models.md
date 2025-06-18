@@ -301,7 +301,7 @@ Inside the `questionnaires.html` insert the following code.
 
 As mentioned in [Chapter 5](05-base-template.md#creating-a-basehtml-file), the `{% extends "base.html" %}` copies the base template we defined in the `templates` folder at project level. The `{% block base_content %} {% endblock base_content %}` simply copies the Bootstrap template in our `base.html` and whatever is encapsulated within its block inherits the bootstrap theme found in `base.html`. 
 
-However, we also introduce something else; a jinja `for` loop. The `{% for question in questionnaires %} {% endfor %}`. This is similar to a python `for` loop only that it is written in jinja syntax. The `{% endfor %}` breaks out of the loop. 
+However, we also introduce something else; a [jinja](https://jinja.palletsprojects.com/en/stable/) `for` loop. The `{% for question in questionnaires %} {% endfor %}`. This is similar to a python `for` loop only that it is written in jinja syntax. The `{% endfor %}` breaks out of the loop. 
 
 Inside this `for` loop we find the `{{ question.territory }}` and `{{ question.area }}` jinja tags. They stand for each value looped by the `{% for question in questionnaires %}` which references the `questionnaires` variable in `questionnaires = Questionnaire.objects.all()` of the `Questionnaire` class. 
 
