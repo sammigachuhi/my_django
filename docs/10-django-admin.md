@@ -1,4 +1,4 @@
-# Chapter 10 
+# Chapter 10: Django admin
 
 ## What is the Django admin?
 

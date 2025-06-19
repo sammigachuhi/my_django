@@ -1,14 +1,14 @@
-# Chapter 11 
+# Chapter 11: Modifications in Django admin
 
 ## Missing date and time fields
 
-From the last chapter, we had a function Django admin site that shows our model's fields except for `survey_date` and `survey_time`. Apparently, if one uses the `auto_add_new` parameter in their `DateTime` and `TimeField` fields, or even `DateTimeField` for that matter, the date and time fields will be automatically added when the object is created for the first time. They will also be uneditable. However, they will not appear in the Django Admin.
+From the last chapter, we had a functioning Django admin site that shows our model's fields except for `survey_date` and `survey_time`. Apparently, if one uses the `auto_add_new` parameter in their `DateTime` and `TimeField` fields, or even `DateTimeField` for that matter, the date and time fields will automatically be added when the object is created for the first time. They will also be uneditable. However, they will not appear in the Django Admin.
 
 What shall we do yet the date and time is important to know when the survey was being conducted?
 
 ## Date and time fields in Django Admin 
 
-There is a work around to the above problem. We will make the date and time fields (unfortunately) editable but they will be set at the current date and time by default. 
+There is a work around to the above problem. We will make the date and time fields editable but they will by default be set at the current date and time by default. 
 
 In your `australia/models.py`, change the `survey_date` and `survey_time` fields to match as below:
 
@@ -37,7 +37,7 @@ Feel free to use your local timezone as contained in this list of [timezones](ht
 
 ## Modify the `admin.py`
 
-In our first instance of creating models, we simply used `pass` keyword to capture all fields defined by our `QuestionnaireAdmin` class.
+In our first instance of creating models, we simply used the `pass` keyword to capture all fields defined by our `QuestionnaireAdmin` class.
 
 ```
 class QuestionnaireAdmin(admin.ModelAdmin):
@@ -62,7 +62,7 @@ This will display the fields in our DjangoAdmin as `survey_date`, `survey_time`,
 
 Now that we've made changes to our model, it's time we tell Django to make updates to our database schema.
 
-First run `python3 manage.py makemigrations australia` to tell Django to make records of the updates but limited to the `australia` application only.
+First run `python3 manage.py makemigrations australia` to tell Django to make records of the updates but limited to the `australia` app only.
 
 ```
 Migrations for 'australia':
@@ -70,7 +70,7 @@ Migrations for 'australia':
     ~ Alter field survey_time on questionnaire
 ```
 
-Thereafter, run `python3 manage.py migrate australia` to tell Django to apply the modifications in our database schema, and only for those updates within the `australia` app. 
+Thereafter, run `python3 manage.py migrate australia` to tell Django to apply the modifications in our database schema but restricted to those of the `australia` app only.
 
 ```
 Operations to perform:
@@ -81,9 +81,7 @@ Running migrations:
 
 Once done, run `python3 manage.py runserver`. Go to `http://127.0.0.1:8000/admin`. 
 
-Go to the **Questionnaire** button under your **Australia** application name.
-
-click on any previous response, say *Questionnaire object (1)*. 
+Go to the **Questionnaire** button under your **Australia** application name. Click on any previous response, say *Questionnaire object (1)*. 
 
 ![Questionnaire object 1](images/questionnaire_object_1.PNG)
 
@@ -93,9 +91,7 @@ Click on it. You will see the date and time at which the question was set. This 
 ![Time question was set](images/question_time.PNG)
 
 
-If you add a question, you will notice that the `survey_date` as *Survey date* and `survey_time` as *Survey time* appear and are by default set to your local time, all thanks to the `TIME_ZONE` we defined and updates we made in the `australia/models.py` file.
-
-You canl leave the date and time fields at their defaults or change them.
+If you add a question, you will notice that the `survey_date` as *Survey date* and `survey_time` as *Survey time* appear and are by default set to your local time. But notice they are also editable as well. The time is set to the `TIME_ZONE` variable you set in the `settings.py` file. 
 
 ![Add question](images/add_question.PNG)
 

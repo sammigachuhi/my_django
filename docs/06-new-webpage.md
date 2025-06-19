@@ -1,4 +1,4 @@
-# Chapter 6
+# Chapter 6: Webpages
 
 ## Adding a new webpage
 

@@ -1,4 +1,4 @@
-# Chapter 09 
+# Chapter 09: A model
 
 ## What is a model in Django?
 

@@ -1,4 +1,4 @@
-# Chapter 8
+# Chapter 8: Another Django app
 
 ## Adding another app 
 
