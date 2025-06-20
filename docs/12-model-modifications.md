@@ -1,15 +1,15 @@
 
-# Chapter 12 
+# Chapter 12: Foreign keys
 
-## Foreign keys
+## What is a foreign key?
 
-A [foreign key](https://www.freecodecamp.org/news/how-to-use-a-foreign-key-in-django/) in Django is a field in your table that is used to link two tables together. Think of it as a field that enables a *many-to-one* relationship where a single author can have multiple books, a single customer can shop various items and a single blog can have many comments. A foreign key is what will be used to link a single row to several records or even the reverse. 
+A [foreign key](https://www.freecodecamp.org/news/how-to-use-a-foreign-key-in-django/) in Django is a field in your table that is used to link two tables together. Think of it as a field that enables a *many-to-one* relationship where a single author can have multiple books, a single customer can shop various items and a single blog can have many comments. A foreign key is what will be used to link a single row to several records and vice versa. 
 
-We already have a model that collects basic information: `survey_date`, `survey_time`, `territory`, and `area`. We would like to go a step further. The original idea was to create a dynamic choices list where we would have multiple-select question with a dropdown of the field team's names and a second follow-up question which would be single-select and based on the choices selected from the former. However, that proved tricky as shown [here](https://stackoverflow.com/questions/24431827/django-model-choice-field-depend-on-other-fields-choice). Nevertheless, we proceeded with the idea of Foreign keys as it is an important topic in Django.
+We already have a model that collects basic information: `survey_date`, `survey_time`, `territory`, and `area`. We would like to go a step further. The original idea was to create a dynamic choices list where we would have multiple-select question. This would then be followed up by a second single-select question whose values would be dependent on the choice value in the preceding question. However, that proved tricky as explained in this [stack exchange](https://stackoverflow.com/questions/24431827/django-model-choice-field-depend-on-other-fields-choice). Nevertheless, we proceeded with the idea of Foreign keys as it is an important topic in Django.
 
 ## Modify the models
 
-In our `models.py` file, we would like to create the model that will be used to select all the team members that were part of the entourage of interviewing people. 
+In our `models.py` file, we would like to create the model that will be used to select all the team members that were part of the interviewing team. 
 
 Let's do so:
 
@@ -36,13 +36,11 @@ class Researcher(models.Model):
         return self.researchers
 ```
 
+In the above, we define a dictionary called `RESEARCHERS_LIST` that will contain names of our field members. 
 
-In the above, we define a dictionary called `RESEARCHERS_LIST` that will contain the names our field members. 
-
-We also pass a `def __str__(self)`. This function is used to return the name of the value to be rendered on the admin, and not something like `Researcher object (1)` as shown below. Omitting this field will make Django return the object number which is not helpful at all.
+We also pass a `def __str__(self)`. This function is used to return the name of the value to be rendered on the admin, and not something like `Researcher object (1)` as shown below.
 
 ![Object name](images/object_name.PNG)
-
 
 For the **Questionnaire** model, we add the following lines:
 
@@ -55,15 +53,15 @@ recorder = models.ForeignKey(Researcher, on_delete=models.CASCADE,)
 
 The above does the following:
 
-1. The `recorder` variable is a ForeignKey object. The `models.ForeignKey` takes at least two parameters: the model to reference to and the `on_delete` option. Here, we define the reference model as `Researcher` and the `on_delete` as `models.CASCADE`. On the latter, this means that if the parent object, in this case the name of the recorder, this will affect the row in the `Questionnaire` model as well.
+1. The `recorder` variable is a ForeignKey object. The `models.ForeignKey` takes at least two parameters: the model to refer from and the `on_delete` option. Here, we define the reference model as `Researcher` and the `on_delete` as `models.CASCADE`. On the latter, the `models.CASCADE` option sets the model to always delete the recorder name if that parent researcher object has also been deleted. In other words, it *cascades* the effects. 
 
-We also define a `def __string__(self)` here which will show on the Django admin webpage the date at which the questionnaire was filled and the recorder.
+We also define a `def __string__(self)` here which will show on the Django admin webpage the date at which the questionnaire was filled and by which recorder.
 
 ## Register models
 
 Since we had a created a new `Researcher` model, we will have to add it to the `admin.py` page. The `admin.py` is used to display our models in the Django website. 
 
-Let's add our `Researcher` model in the `admin.py` file. Notice that we first call it before registering, otherwise Django won't know it is there. Or in simple terms you will face errors.
+Let's add our `Researcher` model in the `admin.py` file. Notice that we first call it before registering, otherwise Django won't know it is there. 
 
 ```
 from django.contrib import admin
@@ -95,7 +93,7 @@ python3 manage.py makemigrations australia
 ```
 
 
-The last part, `australia` species we will only make migrations to the model(s) in our `australia` app.
+The last part, `australia` species we will only snapshot the migrations to the model(s) in our `australia` app.
 
 Then let implement the changes in the database:
 
@@ -126,10 +124,9 @@ The previous questions of *Survey date*, *Survey time*, *Territory* and *Area* w
 
 Select one of the researchers from the dropdown and hit **SAVE**. 
 
-
 ![Date and recorder](images/date_recorder.PNG)
 
-The result will be the record will be saved and displayed on the **Questionnaires** webpage.
+The record will be saved and displayed on the **Questionnaires** webpage.
 
 
 
