@@ -1,4 +1,4 @@
-# Chapter 13 
+# Chapter 13: Images in Django
 
 ## Adding images
 
