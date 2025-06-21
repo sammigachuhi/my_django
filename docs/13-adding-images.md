@@ -2,7 +2,7 @@
 
 ## Adding images
 
-They say an image is worth a thousand words. We would like our question to have the option of uploading an image. However, this component will be optional, in that if a respondent doesn't like it we can just leave it blank. 
+They say an image is worth a thousand words. We would like our question to have the option of uploading an image. However, this component will be optional, in that if a respondent doesn't like it they can just leave it blank. 
 
 Let's proceed and do so.
 
@@ -25,7 +25,7 @@ class Questionnaire(models.Model):
 
 ```
 
-The `models.FileField` is responsible for enabling upload of files in your Django app. The `upload_to` parameter provides a way of setting up the upload directory and file name. We have beautified it in that it will also show the year-month-day as part of the path of the uploaded file. We set `blank` to `True` so that it's possible for the field to be left as blank without raising errors.
+The `models.FileField` is responsible for enabling upload of files in your Django app. The `upload_to` parameter provides a way of setting up the upload directory and file name. We have beautified it in that it will also show the year-month-day as part of the path of the uploaded file. We set `blank` to `True` so that it's possible for one fill and save the questionnaire without uploading an image.
 
 ## Updating `settings.py` for images
 
@@ -41,7 +41,7 @@ The `MEDIA_ROOT` setting constructs the path to the upload folder while the `MED
 
 ## Update the `urls.py` file 
 
-Remember urls are responsible for routing, and we want our images to be rendered somewhere. We will also add the route for our uploads in the `sanitation/urls.py` file. 
+Remember urls are responsible for routing, and we want our images to be rendered somewhere. We will therefore add the route for our uploads in the `sanitation/urls.py` file. 
 
 
 ```
@@ -58,13 +58,13 @@ from django.conf.urls.static import static
 
 ## Perform migrations 
 
-Now to record the migrations that we've done.
+Now let's save the migrations that we've done.
 
 ```
 python3 manage.py makemigrations australia
 ```
 
-Now to implement the changes in our database.
+Now that we've taken a snapshot of the migrations, its time to implement the changes in our database.
 
 ```
 python3 manage.py migrate australia
@@ -75,7 +75,7 @@ You will see our changes have been added into the `australia/migrations` folder.
 
 ## Rerun the server
 
-As always, seeing is believing. Therefore rerun your servia via `python3 manage.py runserver`. Go to the **Questionnaire** tab. You can create a new one or update an existing questionnaire. Open the *questionnaire* and you will see an **images** field. This is the button to upload images. Once done, hit **SAVE**. 
+As always, seeing is believing. Therefore rerun your server via `python3 manage.py runserver`. Go to the **Questionnaire** tab. You can create a new one or update an existing questionnaire. Open the *questionnaire* and you will see an **images** field. Upload any image of your choice using this button. Once done, hit **SAVE**. 
 
 ![Upload images](images/upload_images.PNG)
 

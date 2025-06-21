@@ -1,8 +1,5 @@
+
 # Preface
-
-## About the Author
-
-Samuel Gachuhi is a data scientist who has a background in Geography and Environmental Studies. Some years after university, he began teaching himself to programme. He still finds it fun to teach and showcase others what he's created and learnt over time.
 
 ## Purpose of writing this book
 
@@ -13,6 +10,3 @@ Though the books has its own limitations, inconsistencies and imperfections, it 
 ## Github
 
 You can get the entire code used in the book from here: [Github Repository](https://github.com/sammigachuhi/my_django)
-
-
-
