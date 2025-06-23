@@ -6,7 +6,7 @@
 
 ## Deploying our Django app to render 
 
-Inasmuch Render endeavours to make deployment as painless as possible, there are a few steps we need to undertake. 
+Inasmuch Render endeavours to make deployment painless, there are a few steps we need to undertake. 
 
 The first involves installing the necessary packages that will make our deployment process as smooth as possible. 
 
@@ -75,9 +75,7 @@ python manage.py collectstatic --noinput
 
 The `collectstatic` command is a built-in Django management command that collects all static files from our project, including files from each installed app, and then places them into a single location, specified by the `STATIC_ROOT` setting. This location is where our web server will look for static files to serve to the end users.
 
-
 When we run the `python manage.py collectstatic --noinput`, we are executing the above actions but our `--noinput` tells the deployment server to continue deploying the static files without requiring any user input, which might cause the app or the deployment process to hang.
-
 
 Thereafter, to implement our migrations we run `python3 manage.py makemigrations` and `python3 manage.py migrate` in that order.
 
@@ -85,7 +83,7 @@ Save your Django app to Github.
 
 ## Render
 
-Create an account in Render and Proceed to **Create a web service** menu.
+Create an account in Render and proceed to **Create a web service** menu.
 
 Connect Render to the Github account containing your Django app.
 
@@ -95,18 +93,17 @@ Select the **Region** you would like your services to be hosted. In our case -- 
 
 Specify the Github branch holding your Django project. In our case it is `main` branch.
 
-For **Root Directory**, specify the directory containing all your Django apps. If all your Django apps are in the root directory, no need to specify this. However, if all your apps are within a single directory, such as `sanitation/` in our case, go ahead and specify this. Once you write the root directory, Render will autopopulate the root directory name in subsequent text boxes.
+For **Root Directory**, specify the directory containing all your Django apps. If all your Django apps are in the root directory, no need to specify this. However, if all your apps are within a single directory, such as `sanitation/` in our case, go ahead and specify this. Once you write the root directory, Render will autopopulate the root directory name in the subsequent text boxes.
 
 For **Build Command**, insert `pip install -r requirements.txt`. 
 
 For **Start Command**, insert `python manage.py runserver 0.0.0.0:8000`.
 
-For the Environment Variables, insert `PYTHON_VERSION` and `3.10.12` in the **Key** and **Value** fields respectively.
+For the **Environment Variables**, insert `PYTHON_VERSION` and `3.10.12` in the **Key** and **Value** fields respectively.
 
 Click on **Create web service** and Render will build and deploy your app. 
 
-Watch this video which will be very helpful as it similar to our case. [video](https://www.youtube.com/watch?v=MPGoy5rp1GE)
-
+If you would like to visually follow along the above steps, watching this video which will be very helpful as it similar to our case. [video](https://www.youtube.com/watch?v=MPGoy5rp1GE)
 
 Our app is found on this link: https://django-sanitation-app.onrender.com/.
 
@@ -116,7 +113,7 @@ https://django-sanitation-app.onrender.com/australia/
 
 https://django-sanitation-app.onrender.com/australia/questionnaires
 
-Click on a questionnaire and see it open up one of our responses!
+Click on a questionnaire and see it open up our responses!
 
 ![Django on Render](images/django_render.PNG)
 
