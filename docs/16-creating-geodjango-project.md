@@ -1,11 +1,10 @@
-# Chapter 16
+# Chapter 16: Geodjango
 
 ## What is geodjango?
 
 [Geodjango](https://www.lifeingis.com/geodjango-tutorial-series/?mode=grid) is a python module for developing Geographic Information Systems (GIS) applications. A [Geographic Information System (GIS)](https://www.usgs.gov/faqs/what-a-geographic-information-system-gis) is a computer system that analyzes and displays geographically referenced information. It uses data that is attached to a unique location.
 
-Geodjango enables one create geographic web applications using Django. 
-
+Geodjango enables us to create geographic web applications using the Django framework. 
 
 ## Create a new Django project 
 
@@ -19,13 +18,11 @@ mkdir my_geodjango/
 
 Get into that directory via `cd my_geodjango/`. 
 
-Open that directory in vs code by typing `code .` within the `my_geodjango` in wsl2. 
-
-It's all empty. 
+Open that directory in vs code by typing `code .`.
 
 ## Create a virtual environment
 
-First things first. Let's create a virtual environment. If you've followed us from Chapter 1 so far, you know that a virtual environment is important in containerizing our project and preventing conflicts due to disparate packages across projects. 
+First things first. Let's create a virtual environment. If you've followed us from [Chapter 1](#create-a-virtual-environment) so far, you know that a virtual environment is important in containerizing our project and preventing conflicts due to disparate packages across projects. 
 
 ```
 python3 -m venv venv
@@ -55,7 +52,7 @@ Now let's create our Geodjango project called `agriculture`.
 django-admin startproject agriculture .
 ```
 
-Note the dot (`.`). That prevents Django from creating a nested directory. That is, it prevents Django from creating another directory called `agriculture` within the `agriculture` directory. This is what happened the first time when we were creating the `sanitation` project at the very beginning. 
+Note the dot (`.`). The period (`.`) prevents Django from creating a nested directory. That is, it prevents Django from creating another directory called `agriculture` within the `agriculture` directory. This is what happened the first time when we were creating the `sanitation` project in [Chapter 1](#create-a-new-django-project).
 
 I personally prefer this second approach since it keeps my folders tidy. 
 
@@ -82,7 +79,7 @@ Good.
 
 ## Create the `geolocations` app
 
-We will create an app called `geolocations` that will be used to collect our geographic coordinates. This is the app that will be using the Geodjango framework.
+We will create an app called `geolocations` that will be used to collect our geographic coordinates. This is the app that we will be reliant on the Geodjango framework.
 
 ```
 python3 manage.py startapp geolocations
