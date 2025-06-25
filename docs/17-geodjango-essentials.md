@@ -1,27 +1,11 @@
-# Chapter 17
+# Chapter 17: Configuring Geodjango
 
 ## Prerequisites for geodjango
 To work with Geodjango, you will first have to install Postgresql and PostGIS.
 
-[Postgresql](https://www.enterprisedb.com/postgres-tutorials/why-django-so-impressive-developing-postgresql-and-python?lang=en) is the world's most powerful object-oriented database. The number one reason for us to use Postgresql is because Geodjango will only work with Postgresql, and not spatial lite. Other than that, Postgresql is the preferred database when working with large projects where the number of your app users is far much bigger than just a few tens. 
+[Postgresql](https://www.enterprisedb.com/postgres-tutorials/why-django-so-impressive-developing-postgresql-and-python?lang=en) is the world's most powerful object-oriented database. The number one reason for us to use Postgresql is because Geodjango will only work with Postgresql, and not the default database of spatial lite. Other than that, Postgresql is the preferred database when working with large projects where your app will handle a significantly large number of uers.
 
-
-[PostGIS](https://postgis.net/) extends the capabilities of the PostgreSQL relational database by adding support for storing, indexing, and querying geospatial data. PostGIS features include:
-
-* `Spatial Data Storage`: Store different types of spatial data such as points, lines, polygons, and multi-geometries, in both 2D and 3D data.
-
-* `Spatial Indexing`: Quickly search and retrieve spatial data based on its location.
-
-* `Spatial Functions`: A wide range of spatial functions that allow you to filter and analyze spatial data, measuring distances and areas, intersecting geometries, buffering, and more.
-
-* `Geometry Processing`: Tools for processing and manipulating geometry data, such as simplification, conversion, and generalization.
-
-* `Raster Data Support`: Storage and processing of raster data, such as elevation data and weather data.
-
-* `Geocoding and Reverse Geocoding`: Functions for geocoding and reverse geocoding.
-
-* `Integration`: Access and work with PostGIS using third party tools such as QGIS, GeoServer, MapServer, ArcGIS, Tableau.
-
+[PostGIS](https://postgis.net/) extends the capabilities of the PostgreSQL relational database by adding support for storing, indexing, and querying geospatial data. 
 
 ## Installing Postgresql 
 
@@ -33,9 +17,9 @@ First let's update our package manager cache by using `apt`:
 sudo apt update
 ```
 
-The above code makes sure that the system has sufficient information of about the dependencies of each package. The code does not install any software, it only provides the information of the latest dependencies for each package.
+The above code makes sure that the system has sufficient information about the dependencies of each package. The code does not install any software, it only provides the information of the latest dependencies for each package.
 
-When you run the above code it will provide your system pseudo name and ask for your passord. 
+When you run the above code you will be prompted for a username and password. 
 
 Thereafter, run the following code to install the necessary packages to enable Postgresql run smoothly.
 
@@ -45,7 +29,7 @@ sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
 
 ## Creating a database and database user 
 
-During the Postgres installation, an operating system user named `postgres` was created to correspond to the `postgres` PostgreSQL administrative user. You need to use this user `postgres` to perform administrative tasks. Use `sudo` to pass in the username `postgres` along with the `-u` option which runs the command as a user, instead of root. Log into the interactive Postgres session by writing the following:
+During the Postgres installation, an operating system user named `postgres` was created to correspond to the `postgres` PostgreSQL administrative user. You need to use this user `postgres` to perform administrative tasks. Use `sudo` to pass in the username `postgres` along with the `-u` option which runs the command as a user, instead of root. Log into the interactive Postgres session by typing out the following:
 
 ```
 sudo -u postgres psql
@@ -53,7 +37,7 @@ sudo -u postgres psql
 
 If you run the above code, a new shell script appears: `postgres=#`...
 
-Now let's create a database and provide a name for it --`my_geodjango`. 
+Now let's create a database called `my_geodjango`. 
 
 ```
 CREATE DATABASE my_geodjango;
@@ -93,8 +77,7 @@ List of databases
 --snip--
 ```
 
-You can now exist the shell session via: `\q`.
-
+You can now exit the shell session via: `\q`.
 
 ## Installing `psycopg2`
 
@@ -103,7 +86,6 @@ This package is used to connect Python to the Postgresql database.
 ```
 pip install Django psycopg2
 ```
-
 
 # Configuring our database 
 
@@ -120,25 +102,7 @@ DATABASES = {
 }
 ```
 
-However, we shall comment out the entire `'default'` dictionary and replace it with the details of our Postgresql database. 
-
-```
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_django',
-        'USER': 'samuel',
-        'PASSWORD': '2013',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-```
+However, we shall comment out the entire `'default'` dictionary and replace it with the details of our Postgis enabled database.[^1] 
 
 Replace the entire `DATABASE` variable with the new defaults. You can choose to comment out or completely erase the former `'defaults'` values. I prefer to comment out so that I can easily revert to the originals in case things get tricky!
 
@@ -159,6 +123,8 @@ DATABASES = {
     }
 }
 ```
+
+[^1]: **NB**: Other literature recommend setting the `ENGINE` key to `postgresql` but based on experience only the `postgis` value works efficiently.
 
 ## Installing PostGIS
 
@@ -182,7 +148,7 @@ Once the Postgresql shell opens, insert the following:
 CREATE EXTENSION IF NOT EXISTS postgis;
 ```
 
-We shall make the user we created, `gachuhi` in this case, as the superuser. Insert the following in the Postgresql shell
+We shall designate the user we created, `gachuhi` as the superuser. Insert the following in the Postgresql shell
 
 ```
 ALTER ROLE gachuhi SUPERUSER;
@@ -190,7 +156,7 @@ ALTER ROLE gachuhi SUPERUSER;
 
 ## Make migrations
 
-To persist our changes to the database, register our migrations and execute them via `python3 manage.py makemigrations` and `python3 manage.py migrate` respectively.
+To persist our changes to the database, let's register our migrations via `python3 manage.py makemigrations` and then implement them via `python3 manage.py migrate` respectively.
 
 ## Creating a superuser
 
