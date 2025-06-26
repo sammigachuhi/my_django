@@ -1,12 +1,11 @@
 
-# Chapter 18 
+# Chapter 18: Geodjango model 
 
 ## Model outline
 
-Let's assume we are researchers who are going to research on the relationship between age and type of crops grown, and where in the country (represented by counties).
+Let's assume we are researchers who are going to collect responses on the age, crops grown and the county at which the farmer is cultivating their produce.
 
-
-We want to design a form that will collect responses to the following questions:
+We want to design a form that will collect responses to the following fields:
 
 1. Researchers - a multi-select question that inserts the names of all researchers involved in the project.
 
@@ -22,14 +21,13 @@ We want to design a form that will collect responses to the following questions:
 
 7. Image - an image of the respondent's farm (optional).
 
-8. Comments - a textfield that allows the recorder to add any other information not collected above but that provides more context. 
-
+8. Comments - a textfield that allows the recorder to add any additional textual information.
 
 ## Designing the model 
 
 Let's create our first model that will capture the name of the researcher.
 
-At the very top, import the models.
+At the very beginning of our `models.py` import the necessary models.
 
 ```
 from django.db import models
@@ -48,7 +46,7 @@ class Researcher(models.Model):
 
 ```
 
-Now add the following class that will capture the rest of the questions 2 to 8 above. Notice that the `Recorder` field is related to the `Researchers` field via a many-to-one relationship as exemplified by the `ForeignKey` field. 
+Now add the following class that will capture the rest of the fields of: *recorder, responder name, location, age, crops, image* and *comments* fields. Notice that the `Recorder` field is related to the `Researchers` field via a many-to-one relationship as exemplified by the `ForeignKey` field. 
 
 ```
 class Question(models.Model):
@@ -84,7 +82,7 @@ class Question(models.Model):
 
 ## Create a media folder
 
-Because we will be uploading images, we have to create a `media/` folder which shall store the images we shall be uploading locally. 
+Because we will be uploading images, we have to create a `media/` folder which shall store the images that shall be uploaded locally. 
 
 Within your `my_geodjango` directory, create a `media/` folder and within it create an `images` folder.
 
@@ -95,7 +93,7 @@ media
 
 ## Image configurations in the `settings.py` file 
 
-Since we also want to capture images, we shall add two new variable in the `settings.py` file.
+Since we also want to capture images, we shall add two new variables in the `settings.py` file.
 
 ```
 MEDIA_URL = "/media/"
@@ -136,7 +134,6 @@ def home(request):
     return HttpResponse("Welcome to the Geolocation App!")
 
 ```
-
 
 Create a `geolocations/urls.py` file and create the `urlpatterns` for the homepage view of our `geolocations` app.
 
@@ -185,17 +182,17 @@ Now let's fire up our server.
 python3 manage.py runserver
 ```
 
-When you check your local host `http://127.0.0.1:8000/`, you will see a very simple unappealing welcome message.
+When you open your local host `http://127.0.0.1:8000/`, you will meet an unappealing welcome message.
 
 ![Geolocation home page](images/geolocation_home_page.PNG)
 
-If you proceed to the *admin* webpage (http://127.0.0.1:8000/admin/) you will see the two models of *Researcher* and *Question* we created.
+If you proceed to the *admin* webpage (http://127.0.0.1:8000/admin/) you will see the two models of *Researcher* and *Question* that we created.
 
 ![Geolocation models](images/geolocation_models.PNG)
 
-You can add some names of your researchers, and also respond to questions. You will notice that the dropdown in the **Recorder** field is dependent on the names you inserted in the **Researcher** class.
+Proceed to add some recorders' names under **Researchers**, and proceed to fill some fields under the **Questions** model.You will notice that the dropdown in the **Recorder** field is dependent on the names you inserted in the **Researcher** class.
 
-Once you save your responses the fields we defined to be shown in the `list_display` of the `QuestionAdmin` class are what will show up on the **Questions** interface of our admin page.
+The values you defined in the `list_display` variable are what will be shown in the **Questions** interface of our admin webpage. 
 
 ![Responses to our geolocation questions](images/geolocation_responses.PNG)
 
