@@ -1,5 +1,5 @@
 
-# Chapter 19 
+# Chapter 19: A Geodjango template
 
 We want to create some templates. In Django, a [template](https://docs.djangoproject.com/en/5.2/topics/templates/) contains the static part of the desired HTML output as well as some syntax that describes how a dynamic content will be inserted. 
 
@@ -14,7 +14,7 @@ We will create some templates for:
 
 ## Create the `templates` folder
 
-Within our `geolocations` app, create `templates` folder and within it create the `geolocations` folder. We use this naming convention of `app_name/templates/app_name` to avoid clashes if there were other apps that could have their own html templates with the same names. 
+Within our `geolocations` app, create `templates` folder and within it create the `geolocations` folder. We use this naming convention of `app_name/templates/app_name` to avoid clashes with other apps that may have the same name.
 
 Within the `geolocations/templates/geolocations` directory, create an `index.html` file. So your templates structure will look like:
 
@@ -48,10 +48,7 @@ This is a nested website that also hosts the Pro-GMO website from [here](https:/
 
 ## Configuring the views
 
-We aren't done yet. 
-
 Go to your `geolocations/views.py` file. Change the home function from returning a simple HttpsResponse via `return HttpsResponse` to rendering a html page via the `render()` function. 
-
 
 ```
 def home(request):
@@ -65,7 +62,7 @@ Now, if you run `python3 manage.py runserver` and go to your local host `http://
 
 ## Create the base template 
 
-We would like to create a template that fulfills purpose 2: Our geolocations responses.
+We would like to create a template that fulfills purpose #2: *Our geolocations responses*.
 
 As the first thing, create a `templates` folder within the `my_geodjango` directory. Inside this `templates` folder, create a `base.html` file which shall be the base template for all of our app's templates.
 
@@ -95,11 +92,11 @@ Inside the `base.html` insert the following content:
 
 ```
 
-In master templates the block tag is a placeholder that will be replaced by a block in a child template with the same name. That is, the styling, thanks to the bootstrap CSS will be there, but I will be able to insert any content in the child template.
+In a master template, the block tag is a placeholder that will be replaced by a block in a child template with the same name. That is, the styling of the block shall remain as defined in the master template, but the content inserted shall be to your own customization.
 
 ## Create the child template 
 
-Within your `templates/geolocations` folder, create a `responses.html` template. Insert it the following content.
+Within your `templates/geolocations` folder, create a `responses.html` template. Thereafter, insert the following content:
 
 ```
 {% extends "base.html" %}
@@ -148,7 +145,7 @@ Within your `templates/geolocations` folder, create a `responses.html` template.
 {% endblock base_content %}
 ```
 
-Here we use a `for` loop within the jinja template to go through every response stored in a variable called `responses`. You may ask, where is this value called `responses` stored? We shall create it in the `geolocations/views.py` file.
+Here we use a `for` loop within the jinja template to go through every response stored in the variable called `responses`. You may ask, where is this value called `responses` stored? We shall create it in the `geolocations/views.py` file.
 
 Go back to your `geolocations/views.py` file. 
 
@@ -173,9 +170,7 @@ def responses(request):
 
 Let's go through each variable.
 
-The `responses` variable captures all content, that is, all the responses captured in the `Question` class. These include the `recorder`, `names`, `location`, `age`, `crops`, `image` and `comments` responses. 
-
-It stores them inside a variable called `context`. 
+The `responses` variable captures all content, that is, all the responses captured in the `Question` class. These include the `recorder`, `names`, `location`, `age`, `crops`, `image` and `comments` responses. It stores them inside a variable called `context`. 
 
 Then in the last line, we render the contents inside a static html page called `responses.html` which contains only a subset of the responses we want to display!
 
