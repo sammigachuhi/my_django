@@ -1,17 +1,14 @@
-# Chapter 20
+# Chapter 20: Django leaflet
 
-## What is leaflet?
+## What is Leaflet?
 
-[Leaflet](https://leafletjs.com/) is the leading JavaScript library for mobile-friendly interactive webmaps.
+[Leaflet](https://leafletjs.com/) is the leading JavaScript library for mobile-friendly interactive webmaps. Leaflet can also be integrated in Django and this gives rise to the term `django-leaflet`.
 
-Leaflet can also be integrated in Django, and when done so, the interrelationship is referred to as `django-leaflet`.
+The goal of this chapter is to create a template that shows the points we clicked on the map when providing responses to our django admin page. 
 
-The goal of this chapter is to create a template that shows the points we clicked when answering the questions in our django admin page. 
+## Installing Leaflet 
 
-
-## Installing leaflet 
-
-To install leaflet, ensure that your virtual environment is active and run:
+To install Leaflet, ensure that your virtual environment is active and run:
 
 ```
 pip install django-leaflet
@@ -41,7 +38,7 @@ INSTALLED_APPS = [
 
 ## Configure templates
 
-We want one to be led to the webmap when they click a link within the `responses.html` file. 
+We want a webmap to appear when the user clicks on a link in the `responses.html` file. 
 
 Right under the `<p></p>` tags of *Crops grown:* value, insert the following `<a></a>` tag. 
 
@@ -56,14 +53,14 @@ Right under the `<p></p>` tags of *Crops grown:* value, insert the following `<a
 
 ```
 
-Additionally, add two breaklines `<br>` to space out the button with the images we added.
+Additionally, add two breaklines via `<br>` to space out between the button and the images we added.
 
 ```
 <br>
 <br>
 ```
 
-Now, let's create a new template called `locations.html`. We want this template to dispaly the respondent's name, show their location and comments. 
+Now, let's create a new template called `locations.html`. We want this template to display the respondent's name, show their location and comments. 
 
 Create a `locations.html` within the `templates/geolocations` folder. Your directory structure should look like below.
 
@@ -152,13 +149,12 @@ Inside the `locations.html`, paste the below content.
     }
 </script>
 
-
 {% endblock base_content %}
 ```
 
 ## Overview of the template 
 
-We first load the `base.html` the leaflet_tags and base content block.
+We first load the `base.html` of the leaflet_tags and base content block.
 
 ```
 {% extends "base.html" %}
@@ -190,7 +186,7 @@ We then add the content that will be displayed.
 
 ```
 
-Thereafter, the following line fires up the rendering of our leaflet map.
+Thereafter, the following line fires up the rendering of our Leaflet map.
 
 ```
 <div>
@@ -198,7 +194,7 @@ Thereafter, the following line fires up the rendering of our leaflet map.
 </div>
 ```
 
-This is followed by inserting the CSS and JavaScript to be used by leaflet.
+This is followed by inserting the CSS and JavaScript to be used by Leaflet.
 
 ```
 {% leaflet_css %}
@@ -206,9 +202,9 @@ This is followed by inserting the CSS and JavaScript to be used by leaflet.
 
 ```
 
-After that comes the `script` tag, the mammoth behind our map rendering.
+After that comes the `script` tag. This is what contains the contents that will be rendered on our map. 
 
-We first begin by telling Leaflet where it should find the markers via:
+We first begin by telling Leaflet where it should find the markers via the following one liner code:
 
 ```
 L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.9.4/dist/images/';
@@ -236,7 +232,7 @@ L.marker([latNum, lonNum]).addTo(map)
             .openPopup(); // Open the popup by default
 ```
 
-There are other intermediate lines of code that are used for debugging such as the `if` statement and `console.log()` at the bottom.
+There are other intermediate lines of code that are used for debugging such as the `if` statement and `console.log()` at the bottom. See the entire html file in [Github](https://github.com/sammigachuhi/my_geodjango/blob/main/geolocations/templates/geolocations/locations.html).
 
 ## Configure the `views.py` file
 
@@ -255,11 +251,11 @@ def locations(request, pk):
 
 ```
 
-The above function relies on the primary key of an object to display the response. This primary key (pk) can be relied on to differiente which responses are displayed by a particular webpage. YOu will see this when we configure our `urls.py` file.
+The above function relies on the primary key of an object to display the response. This primary key (pk) can be relied on to differientiate which responses are displayed by a particular webpage. You will see this when we configure our `urls.py` file.
 
 ## Configure the `urls.py` file
 
-We shall add the routing to our `locations.html` template but we shall add a value that enables the route to show which response it is via its primary key!
+We shall add the routing to our `locations.html` template but we shall add a value that shows which response corresponds to the selected map location. 
 
 ```
 urlpatterns = [
@@ -274,6 +270,6 @@ Now let's run the server and the `http://127.0.0.1:8000/responses/` link should 
 
 ![Responses webpage](images/responses-webpage.PNG)
 
-If you click on the **See location** button, it should take you to a webmap showing the point locations that selected in the admin for that particular respondent.
+If you click on the **See location** button, it should take you to a webmap showing the point locations that were selected in the admin for that particular respondent.
 
 ![Responses webmap](images/responses-webmap.PNG)
