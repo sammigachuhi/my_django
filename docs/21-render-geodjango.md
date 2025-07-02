@@ -1,9 +1,9 @@
 
-# Chapter 21 
+# Chapter 21: Render a Geodjango app
 
 ## Prerequisites
 
-This chapter shall detail how to host your geodjango application on Render. It may not be the ideal, but hosting will follow one or more of the following steps.
+This chapter shall detail how to host your geodjango application on Render. This may not be the ideal procedure, but hosting will follow one or more of the following steps.
 
 First, install the `gunicon`, `whitenoise` and `psycopg2-binary` packages. 
 
@@ -19,14 +19,14 @@ pip freeze > requirements.txt
 
 ## Configure `settings.py`
 
-At the very top, ensure the following packages have been called.
+At the very top of your `settings.py` file, ensure the following packages have been called.
 
 ```
 import os
 import dj_database_url
 ```
 
-Then, in your `DATABASES` variable, use the following `default` settings. Uncomment any other `default` variable you have within `DATABASES` to use this one.
+Then, in your `DATABASES` variable, uncomment the `default` variable and replace it with this one. 
 
 ```
 'default': dj_database_url.config(
@@ -40,7 +40,7 @@ Then, in your `DATABASES` variable, use the following `default` settings. Uncomm
 
 ```
 
-You may have questions, as why the former that we created that was successful on our laptop now has to be changed to this one. It is what partially worked compared to the former that just couldn't start up our server.
+You may indeed be asking why we should replace the former `default` variable values with what has been provided above. According to some web scroll, the new `default` variable values are what will ensure our app is hosted on Render. 
 
 Within your `settings.py` file, ensure that your `ALLOWED_HOSTS` variable is set to `ALLOWED_HOSTS = ['*']`,
 
@@ -50,8 +50,6 @@ At the bottom of your `settings.py` file, add the following:
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ```
-
-
 
 ## Run migrations
 
@@ -91,9 +89,9 @@ Under **Start Command**, use this: `python manage.py runserver 0.0.0.0:8000`.
 
 For the **Environment Variables**, the *Key* and *Value* parameters will be as follows, respectively.
 
-PYTHON_VERSION              3.10.12
+Key: `PYTHON_VERSION`              Value: `3.10.12`
 
-DATABASE_URL                <your-postgres-internal-or-external-database-url>
+DATABASE_URL:                 `<your-postgres-internal-or-external-database-url>`
 
 
 For the `DATABASE_URL`, we shall use either the internal or external database url for the Postgres instance we created earlier. These values can be found in the *Info* tab of your Postgres instance on render.
@@ -104,3 +102,4 @@ At the end of the deployment, a link will be provided at the very top. Here is o
 
 ![Pro GMO website](images/pro_gmo_website.PNG)
 
+Kindly leave me a comment on the Github Repo for this project if you manage, or have previously managed to host a Geodjango app on Render.
